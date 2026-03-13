@@ -1,0 +1,105 @@
+Student Attendance Management System using C (File Handling)
+
+1.  Introduction The Student Attendance Management System is a simple C
+    programming project that helps manage student attendance digitally.
+    Traditionally, attendance is recorded manually in registers, which
+    can be time-consuming and difficult to manage. This system replaces
+    manual record keeping with a computerized solution using file
+    handling in C.
+
+The program stores student details such as roll number, name, and
+attendance records in a file. The stored data can be updated and
+accessed whenever needed. This makes attendance tracking faster, more
+organized, and less prone to errors.
+
+The system is designed to perform basic operations such as adding new
+students, marking attendance, and viewing attendance records.
+
+2.  Objective The main objective of the Student Attendance Management
+    System is to automate the process of recording and managing student
+    attendance.
+
+The key objectives include: - To digitize student attendance records. -
+To store student information permanently using files. - To reduce manual
+work and errors in attendance tracking. - To provide an easy system for
+viewing attendance details. - To help teachers or administrators quickly
+monitor student attendance performance.
+
+3.  System Modules
+
+Main Module (main()) This module controls the overall execution of the
+program. It displays the menu and allows the user to select different
+operations such as adding students, marking attendance, viewing records,
+or exiting the program.
+
+Menu Module (menu()) This module displays the available options to the
+user. It acts as the user interface where users can choose the desired
+operation.
+
+Menu options include: 1. Add Student 2. Mark Attendance 3. View Records
+4. Exit
+
+Add Student Module (add()) This module is used to enter new student
+details such as roll number and name. The details are stored in a file
+using file handling so that the information can be accessed later.
+
+Mark Attendance Module (mark()) This module allows the user to update
+attendance for a specific student. The program asks whether the student
+is Present (P) or Absent (A) and updates the attendance count
+accordingly.
+
+View Records Module (view()) This module displays all the stored student
+records including: - Roll Number - Student Name - Number of days
+present - Total number of classes
+
+File Handling Module File handling is used internally to store and
+retrieve data from files. The program saves student records in a file so
+that the data is not lost when the program is closed.
+
+4.  System Design The system uses a structure (struct) to store student
+    information. Each student record contains:
+
+-   Roll Number
+-   Name
+-   Number of days present
+-   Total number of classes
+
+These records are stored in a file called data.txt.
+
+5.  Working of the System Step 1: Start the Program When the program
+    starts, a menu is displayed showing different options.
+
+Step 2: Add Student The user can add new student details. The data is
+saved in the file.
+
+Step 3: Mark Attendance The program asks for the student’s roll number
+and then asks whether the student is present or absent. The attendance
+record is updated.
+
+Step 4: View Records The user can view all stored records in a table
+format showing attendance information.
+
+Step 5: Exit The program exits when the user selects the exit option.
+
+6.  Advantages of the System
+
+-   Reduces manual work
+-   Easy to use
+-   Permanent data storage
+-   Faster attendance management
+-   Organized student records
+
+7.  Limitations
+
+-   The system runs only in the console (command prompt).
+-   It does not have a graphical user interface.
+-   Only basic attendance features are included.
+
+8.  Conclusion The Student Attendance Management System is a useful C
+    programming project that demonstrates the use of structures and file
+    handling. It allows users to store, update, and view attendance
+    records efficiently.
+
+The system simplifies the process of attendance management by replacing
+manual registers with a digital solution. This makes the process faster,
+more accurate, and easier to maintain.
