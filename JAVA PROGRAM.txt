@@ -1,0 +1,160 @@
+PROGRAM:
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define FILENAME "data.txt"
+
+struct Student {
+    int roll;
+    char name[50];
+    int present;
+    int total;
+};
+
+void menu();
+void add();
+void mark();
+void view();
+
+int main() {
+    int choice;
+
+    do {
+        menu();
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                add();
+                break;
+            case 2:
+                mark();
+                break;
+            case 3:
+                view();
+                break;
+            case 4:
+                printf("\nBye!\n");
+                break;
+            default:
+                printf("\nWrong choice, try again.\n");
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+void menu() {
+    printf("\n--- ATTENDANCE SYSTEM ---\n");
+    printf("1. Add Student\n");
+    printf("2. Mark Attendance\n");
+    printf("3. View Records\n");
+    printf("4. Exit\n");
+    printf("Enter choice: ");
+}
+
+void add() {
+    FILE *f;
+    struct Student s;
+
+    printf("\n--- Add New Student ---\n");
+
+    printf("Enter Roll Number: ");
+    scanf("%d", &s.roll);
+
+    printf("Enter Name (one word): ");
+    scanf("%s", s.name);
+
+    s.total = 0;
+    s.present = 0;
+
+    f = fopen(FILENAME, "ab");
+
+    if (f == NULL) {
+        printf("\nERROR: Cannot open file.\n");
+        return;
+    }
+
+    fwrite(&s, sizeof(struct Student), 1, f);
+    fclose(f);
+
+    printf("\nStudent %s added.\n", s.name);
+}
+
+void mark() {
+    FILE *f;
+    struct Student s;
+    int target_roll;
+    char status;
+    int found = 0;
+
+    printf("\n--- Mark Attendance ---\n");
+    printf("Enter Roll to mark: ");
+    scanf("%d", &target_roll);
+
+    f = fopen(FILENAME, "r+b");
+    if (f == NULL) {
+        printf("\nFile error or no students added yet.\n");
+        return;
+    }
+
+    while (fread(&s, sizeof(struct Student), 1, f) == 1) {
+        if (s.roll == target_roll) {
+            found = 1;
+
+            printf("Is %s Present? (P/A): ", s.name);
+            scanf(" %c", &status);
+
+            s.total++;
+            if (status == 'P' || status == 'p') {
+                s.present++;
+                printf("Marked: PRESENT.\n");
+            } else if (status == 'A' || status == 'a') {
+                printf("Marked: ABSENT.\n");
+            } else {
+                s.total--;
+                printf("Invalid status. No update done.\n");
+            }
+
+            fseek(f, -(long)sizeof(struct Student), SEEK_CUR);
+            fwrite(&s, sizeof(struct Student), 1, f);
+            break;
+        }
+    }
+
+    fclose(f);
+
+    if (!found) {
+        printf("\nRoll %d not found.\n", target_roll);
+    } else {
+        printf("Record updated.\n");
+    }
+}
+
+void view() {
+    FILE *f;
+    struct Student s;
+    int count = 0;
+
+    f = fopen(FILENAME, "rb");
+    if (f == NULL) {
+        printf("\nNo data file found.\n");
+        return;
+    }
+
+    printf("\n--- All Records ---\n");
+    printf("Roll | Name | Present | Total\n");
+    printf("-------------------------------\n");
+
+    while (fread(&s, sizeof(struct Student), 1, f) == 1) {
+        count++;
+        printf("%d | %s | %d | %d\n",
+               s.roll,
+               s.name,
+               s.present,
+               s.total);
+    }
+    
+    fclose(f);
+}
